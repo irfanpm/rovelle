@@ -1,0 +1,7 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import BrandLogo from "./BrandLogo";
+export default function Footer() {
+  return <footer className="footer"><div className="wrap footer-grid"><div><Link href="/" aria-label="Rovelle Jewels home"><BrandLogo/></Link><p>A little elegance for everyday moments.<br/>Jewellery chosen to feel like you.</p><Link className="footer-story" href="/about">Discover our story <ArrowUpRight size={15}/></Link></div><div><h3>THE COLLECTION</h3><Link href="/products?category=necklaces">Necklaces</Link><Link href="/products?category=earrings">Earrings</Link><Link href="/products?category=jewellery-sets">Jewellery Sets</Link><Link href="/products?new=1&edit=jewellery">New Arrivals</Link><Link href="/products">Shop All</Link></div><div><h3>CUSTOMER CARE</h3><Link href="/support">Contact & Support</Link><Link href="/shipping">Shipping Information</Link><Link href="/returns">Returns & Cancellations</Link><Link href="/account">Your Orders</Link><Link href="/wishlist">Your Wishlist</Link></div><div><h3>THE FINER DETAILS</h3><Link href="/about">About Rovelle</Link><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms & Conditions</Link><p>Thoughtfully selected.<br/>Prices in Indian rupees.</p></div></div><div className="wrap footer-bottom"><span>© {new Date().getFullYear()} Rovelle Jewels. All rights reserved.</span><span>Small details. Beautiful moments.</span></div></footer>;
+}
+

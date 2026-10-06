@@ -1,0 +1,2 @@
+import { getCatalog } from "@/modules/products/catalog";
+export async function GET(request:Request){const q=new URL(request.url).searchParams;let p=await getCatalog();if(q.get("search"))p=p.filter(x=>(x.title+" "+x.description+" "+x.searchKeywords.join(" ")).toLowerCase().includes(q.get("search")!.toLowerCase()));if(q.get("category"))p=p.filter(x=>x.categorySlug===q.get("category"));if(q.get("ids")){const ids=q.get("ids")!.split(",").slice(0,50);p=p.filter(x=>ids.includes(x.id));}return Response.json({products:p},{headers:{"Cache-Control":"no-store"}});}

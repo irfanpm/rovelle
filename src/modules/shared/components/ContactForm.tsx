@@ -1,0 +1,4 @@
+"use client";
+export default function ContactForm({email}:{email:string}) {
+  return <form className="panel contact-form" onSubmit={e=>{e.preventDefault();const data=new FormData(e.currentTarget);const subject="Rovelle enquiry from "+String(data.get("name"));const body="Name: "+String(data.get("name"))+"\nReply email: "+String(data.get("email"))+"\n\n"+String(data.get("message"));window.location.href="mailto:"+email+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);}}><h2>A Personal Note</h2><p>This form opens your email app with your message ready to send.</p><label>Your Name<input name="name" required autoComplete="name" maxLength={100}/></label><label>Your Email<input name="email" type="email" required autoComplete="email"/></label><label>Your Message<textarea name="message" required rows={5} maxLength={3000}/></label><button className="primary">Write to Rovelle →</button></form>;
+}

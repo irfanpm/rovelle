@@ -1,0 +1,13 @@
+import Link from "next/link";
+import { requireAdmin } from "@/lib/require-admin";
+import Settings from "@/modules/admin/models/settings.model";
+import Sourcing from "@/modules/products/models/sourcing.model";
+import { importResearch } from "@/modules/products/actions/sourcing";
+import { economics } from "@/modules/products/profit";
+import { money } from "@/lib/brand";
+export const dynamic="force-dynamic";
+export default async function SourcingPage(){
+ await requireAdmin();const settings=await Settings.findOne({key:"global_settings"});const minimumMargin=settings?.minimumContributionMargin??20;const records=await Sourcing.find().sort({researchId:1});
+ return <div><span className="eyebrow">ROVELLE · PRIVATE BUSINESS DATA</span><h1>Research & sourcing.</h1><p>Supplier data, commercial scores and cost planning are visible only to authorized admins.</p><form action={importResearch}><button className="primary">Import researched candidates</button></form><p className="small">Import adds missing records only. It never replaces your edits or publishes products.</p><div className="admin-metrics"><div>Candidates<strong>{records.length}</strong></div><div>Published<strong>{records.filter(r=>r.publicationApproved).length}</strong></div><div>Hero concepts<strong>{records.filter(r=>r.classification==="hero").length}</strong></div><div>Margin reviews<strong>{records.filter(r=>r.marginReviewRequired).length}</strong></div></div><div className="panel admin-scroll"><table className="admin-table"><thead><tr><th>Rovelle product</th><th>Classification / score</th><th>Supplier cost</th><th>Proposed retail</th><th>Est. contribution</th><th>Est. margin</th><th>Review</th></tr></thead><tbody>{records.map(r=>{const e=economics(r.supplier?.supplierPrice||0,r.retailPrice||1,{shipping:r.costs?.shipping||0,cod:r.costs?.cod||0,rto:r.costs?.rto||0,payment:r.costs?.payment||0,marketing:r.costs?.marketing||0});return <tr key={r.researchId}><td><Link className="text-link" href={"/admin/sourcing/"+r.researchId}>{r.title}</Link><br/><small>{r.category}</small></td><td>{r.classification}<br/>{r.overallScore?`${r.overallScore}/10`:"Not scored"}</td><td>{money(r.supplier?.supplierPrice||0)}</td><td>{money(r.retailPrice||0)}</td><td>{money(e.contribution)}</td><td>{e.margin}%</td><td><span className="badge">{r.marginReviewRequired||e.margin<minimumMargin?"Margin Review Required":r.publicationApproved?"Published":r.decision}</span></td></tr>;})}</tbody></table></div><p className="small">Planning estimates include shipping, COD, RTO, payment and marketing reserves. They are not realized profit and exclude fixed overhead and tax accounting.</p></div>;
+}
+
