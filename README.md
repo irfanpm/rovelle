@@ -44,3 +44,4 @@ Online payment verification remains closed. Coupons can be administered but are 
 Historical sourcing research and catalog-release files live under the ignored `private/` directory. They are optional local inputs for research import and publishing scripts, and are not supplied in this repository. Restore your own reviewed input files locally before using those tools. Tests depending on these historical files skip when they are unavailable; the application and other security checks do not depend on them.
 
 See [redesign and QA report](docs/ROVELLE-REDESIGN.md) and [campaign asset provenance](docs/ROVELLE-CAMPAIGN-ASSETS.md). Decorative campaign images are separate from actual product photography.
+# rovelle
